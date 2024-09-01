@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Panel de Administración</h1>
+
+        <a href="{{ url_for('admin_logout') }}">Cerrar sesión</a>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+              {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <h2>Registrar Nuevo Usuario</h2>
+        <form action="/admin" method="post">
+            <label for="nombre">Nombre y Apellido:</label>
+            <input type="text" id="nombre y apellido" name="nombre y apellido" required>
+            <label for="legajo">Legajo:</label>
+            <input type="text" id="legajo" name="legajo" required>
+            <button type="submit">Registrar</button>
+        </form>
+
+        <h2>Usuarios Registrados</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Legajo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.nombre }}</td>
+                    <td>{{ user.apellido }}</td>
+                    <td>{{ user.legajo }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
