@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Códigos QR</title>
+</head>
+<body>
+    <h1>Códigos QR Generados</h1>
+    <div>
+        {% for qr_code in qr_codes %}
+            <div>
+                <img src="{{ url_for('static', filename=qr_code) }}" alt="Código QR" style="width: 200px; height: 200px;">
+                <p>{{ qr_code }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

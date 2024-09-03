@@ -1,0 +1,3 @@
+ python inspect_db.py
+ python app.py
+ 

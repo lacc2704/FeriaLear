@@ -3,27 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login de Usuario</title>
+    <title>Login Usuario</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Login de Usuario</h1>
-
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            <ul class="flashes">
-              {% for category, message in messages %}
-                <li class="{{ category }}">{{ message }}</li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-        {% endwith %}
-
+        <h1>Login Usuario</h1>
         <form action="/user_login" method="post">
-            <label for="legajo">Legajo:</label>
+            <label for="legajo">Número de Legajo:</label>
             <input type="text" id="legajo" name="legajo" required>
-            <button type="submit">Login</button>
+            <button type="submit">Iniciar sesión</button>
         </form>
     </div>
 </body>

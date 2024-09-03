@@ -24,8 +24,10 @@
 
         <h2>Registrar Nuevo Usuario</h2>
         <form action="/admin" method="post">
-            <label for="nombre">Nombre y Apellido:</label>
-            <input type="text" id="nombre y apellido" name="nombre y apellido" required>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" required>
             <label for="legajo">Legajo:</label>
             <input type="text" id="legajo" name="legajo" required>
             <button type="submit">Registrar</button>
@@ -45,8 +47,8 @@
                 {% for user in users %}
                 <tr>
                     <td>{{ user.id }}</td>
-                    <td>{{ user.nombre }}</td>
-                    <td>{{ user.apellido }}</td>
+                    <td>{{ user.nombre_apellido.split(' ')[0] }}</td>
+                    <td>{{ user.nombre_apellido.split(' ')[1] }}</td>
                     <td>{{ user.legajo }}</td>
                 </tr>
                 {% endfor %}
