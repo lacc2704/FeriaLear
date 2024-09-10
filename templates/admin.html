@@ -23,37 +23,37 @@
         {% endwith %}
 
         <h2>Registrar Nuevo Usuario</h2>
-        <form action="/admin" method="post">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" required>
+        <form action="{{ url_for('admin') }}" method="post">
+            <label for="nombre_apellido">Nombre y Apellido:</label>
+            <input type="text" id="nombre_apellido" name="nombre_apellido" required>
             <label for="legajo">Legajo:</label>
             <input type="text" id="legajo" name="legajo" required>
             <button type="submit">Registrar</button>
         </form>
 
         <h2>Usuarios Registrados</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Legajo</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.nombre_apellido.split(' ')[0] }}</td>
-                    <td>{{ user.nombre_apellido.split(' ')[1] }}</td>
-                    <td>{{ user.legajo }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre y Apellido</th>
+                        <th>Legajo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.nombre_apellido }}</td>
+                        <td>{{ user.legajo }}</td>
+                        <td><a href="{{ url_for('edit_user', user_id=user.id) }}">Editar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

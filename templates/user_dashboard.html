@@ -5,19 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard del Usuario</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <script>
+        function startScan() {
+            document.getElementById('scanner').style.display = 'block';
+            document.getElementById('start_scan').style.display = 'none';
+
+            var html5QrCode = new Html5Qrcode("scanner");
+
+            html5QrCode.start(
+                { facingMode: "environment" },
+                {
+                    fps: 10,
+                    qrbox: { width: 250, height: 250 }
+                },
+                function (decodedText, decodedResult) {
+                    document.getElementById('qr_code').value = decodedText;
+                    document.getElementById('qr_form').submit();
+                },
+                function (error) {
+                    console.error("Error al escanear QR: ", error);
+                }
+            ).catch(function (error) {
+                console.error("Error al iniciar el escáner QR: ", error);
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <h1>Dashboard del Usuario</h1>
-        <p>Bienvenido, usuario con legajo {{ session['user_legajo'] }}!</p>
+        <p>Hola, {{ user.nombre_apellido }}!</p>
         <a href="{{ url_for('user_logout') }}">Cerrar sesión</a>
 
         <h2>Escanear Código QR</h2>
-        <form action="/scan_qr" method="post">
-            <label for="qr_code">Código QR:</label>
-            <input type="text" id="qr_code" name="qr_code" required>
-            <button type="submit">Registrar</button>
+        <button id="start_scan" onclick="startScan()">Iniciar Escaneo</button>
+        
+        <!-- Contenedor para la cámara -->
+        <div id="scanner" style="display:none;"></div>
+        
+        <!-- Formulario oculto que se enviará automáticamente -->
+        <form id="qr_form" action="{{ url_for('scan_qr') }}" method="post">
+            <input type="hidden" id="qr_code" name="qr_code">
         </form>
+
+        <h2>Códigos QR Escaneados</h2>
+        <ul>
+            {% for qr in scanned_qrs %}
+                <li>{{ qr.code }} (Escaneado el {{ qr.timestamp }})</li>
+            {% endfor %}
+        </ul>
     </div>
 </body>
 </html>
